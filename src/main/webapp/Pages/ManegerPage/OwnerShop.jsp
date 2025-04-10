@@ -257,7 +257,7 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 
 	<div class="header-shop">
 		<div>
-			<img src="/WebShop/style/assets/images/logoShop/LOGO CAMSPORT.png"
+			<img src="/style/assets/images/logoShop/LOGO CAMSPORT.png"
 				alt="" style="width: 80px; border-radius: 50%;">
 		</div>
 		<div>

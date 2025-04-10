@@ -17,7 +17,7 @@
 		<div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
     <div style="display: flex; align-items: center;">
         <div>
-            <img src="/WebShop/style/assets/images/logoShop/LOGO CAMSPORT.png" alt="" style="width: 80px; border-radius: 50%;">
+            <img src="/style/assets/images/logoShop/LOGO CAMSPORT.png" alt="" style="width: 80px; border-radius: 50%;">
         </div>
         <div style ="margin-left: 10px">
             <h1 style="font-size: 30px;">CAMSPORT</h1>

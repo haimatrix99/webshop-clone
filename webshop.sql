@@ -193,7 +193,7 @@ CREATE TABLE `shop` (
 --
 
 INSERT INTO `shop` (`shopID`, `user`, `pass`, `nameShop`, `numFollower`, `urlAvatar`) VALUES
-(1, 'camsport', '123456', 'CAMSPORT', '14800', '/WebShop/style/assets/images/logoShop/LOGO CAMSPORT.png');
+(1, 'camsport', '123456', 'CAMSPORT', '14800', '/style/assets/images/logoShop/LOGO CAMSPORT.png');
 
 --
 -- Chỉ mục cho các bảng đã đổ

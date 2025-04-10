@@ -46,7 +46,7 @@ public class RouterFilter implements Filter {
 		String url=httpRequest.getServletPath();
 		System.out.println("URL: "+url);
 		if(url.endsWith(".jsp")&& !url.contains("index.jsp")) {
-			httpResponse.sendRedirect("/WebShop/Trangchu");
+			httpResponse.sendRedirect("/Trangchu");
 		}
 		else chain.doFilter(request, response);
 	}
