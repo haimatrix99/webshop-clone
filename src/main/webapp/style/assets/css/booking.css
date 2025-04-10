@@ -1,0 +1,218 @@
+/* Cấu trúc bố cục chính */
+.container {
+    width: 90%;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding-top: 150px;
+}
+
+/* Tiêu đề */
+h1 {
+    font-size: 36px; /* Tăng kích thước chữ */
+    font-weight: bold; /* Làm đậm chữ */
+    color: #d35400; /* Giữ màu cam */
+    margin-bottom: 20px;
+}
+
+
+/* Bố cục hai cột */
+.layout {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Cột lịch sử đặt sân (bên trái) */
+.column {
+    flex: 1;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Tiêu đề từng khu vực */
+h2 {
+    color: #e67e22; /* Màu cam nhạt */
+}
+
+/* Bảng lịch sử đặt sân */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.booking-table th, .booking-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.booking-table th {
+    background: #d35400; /* Màu cam */
+    color: white;
+}
+
+.booking-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.booking-table tr:hover {
+    background: #f1c40f; /* Màu vàng nhạt */
+    cursor: pointer;
+}
+
+/* Cột đặt sân (bên phải) */
+form {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form input, form select, form button {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Nút đặt sân */
+form button {
+    background: #e67e22;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    border: none;
+    transition: 0.3s;
+}
+
+form button:hover {
+    background: #d35400; /* Màu cam đậm hơn */
+}
+
+/* Nút quay lại trang chủ */
+.back-button {
+    margin-top: 20px;
+    background: #d35400;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.back-button:hover {
+    background: #b03a00;
+}
+/* Container hình ảnh các sân */
+.court-images {
+    margin-top: 15px;
+    text-align: center;
+}
+
+/* Tiêu đề cho phần hình ảnh */
+.court-images h3 {
+    color: #d35400; /* Màu cam */
+    margin-bottom: 10px;
+}
+
+/* Điều chỉnh bố cục ảnh sân để nằm ngang */
+.image-gallery {
+    display: flex;
+    justify-content: center; /* Căn giữa hình ảnh */
+    gap: 15px; /* Tạo khoảng cách giữa các ảnh */
+}
+
+/* Chỉnh kích thước hình ảnh sân */
+.image-gallery img {
+    width: 200px; /* Điều chỉnh kích thước ảnh */
+    height: 130px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Hiệu ứng khi di chuột vào ảnh */
+.image-gallery img:hover {
+    transform: scale(1.05);
+}
+
+
+/* Căn chỉnh form tra cứu lịch sử đặt sân lùi hẳn sang trái */
+.search-form {
+    width: 50%; /* Giảm chiều rộng */
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    text-align: left; /* Căn nội dung sang trái */
+    position: relative;
+    left: 0; /* Đưa form về phía trái */
+}
+
+/* Căn chỉnh tiêu đề nhỏ hơn */
+.search-form h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+/* Chỉnh form-group căn trái */
+.search-form .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-start; /* Đưa form về bên trái */
+}
+
+/* Căn label gần input */
+.search-form label {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Chỉnh input và select nhỏ gọn hơn */
+.search-form select, 
+.search-form input[type="date"] {
+    padding: 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Nút tìm kiếm căn trái */
+.search-form button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}

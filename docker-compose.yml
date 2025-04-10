@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  # Web application
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=webshop
+      - DB_USER=root
+      - DB_PASSWORD=webshop_password
+    networks:
+      - webshop-network
+    restart: unless-stopped
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=webshop_password
+      - MYSQL_DATABASE=webshop
+      - MYSQL_USER=webshop
+      - MYSQL_PASSWORD=webshop_password
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./webshop.sql:/docker-entrypoint-initdb.d/webshop.sql
+    networks:
+      - webshop-network
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+
+networks:
+  webshop-network:
+    driver: bridge
