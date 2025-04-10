@@ -119,13 +119,13 @@ CREATE TABLE `client` (
   `clientID` int(11) NOT NULL,
   `user` varchar(50) DEFAULT NULL,
   `pass` varchar(50) DEFAULT NULL,
-  `money` varchar(20) DEFAULT '1000000000',
+  `money` varchar(20) DEFAULT '0',
   `fullname` varchar(50) DEFAULT NULL,
   `birthday` date DEFAULT '1990-01-01',
   `address` varchar(50) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
-  `image` text DEFAULT NULL,
-  `role` varchar(11) NOT NULL
+  `image` text DEFAULT 'DataImage/user/avatar_userID1.png',
+  `role` varchar(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -135,8 +135,8 @@ CREATE TABLE `client` (
 INSERT INTO `client` (`clientID`, `user`, `pass`, `money`, `fullname`, `birthday`, `address`, `phone`, `image`, `role`) VALUES
 (1, 'test_1', '123456', '36268503', 'Test 1', '2000-06-19', '122 Hoàng Thụ', '0799994566', '/DataImage/user/avatar_userID1.png', '0'),
 (2, 'test_2', '123456', '1000000000', 'Test 2', '2003-10-13', '1 Le Duan', '0912345678', '/DataImage/user/avatar_userID1.png', '0'),
-(18, 'test_3', '123456', '1000000000', 'Test 3', '1997-02-06', 'Hà Nội', '0777050506', NULL, '1'),
-(19, 'test_4', '123456', '1000000000', 'Test 4', '2025-03-05', 'Tứ dân Khoái Châu Hưng Yên', '0899168889', NULL, '0');
+(18, 'test_3', '123456', '1000000000', 'Test 3', '1997-02-06', 'Hà Nội', '0777050506', '/DataImage/user/avatar_userID1.png', '1'),
+(19, 'test_4', '123456', '1000000000', 'Test 4', '2025-03-05', 'Tứ dân Khoái Châu Hưng Yên', '0899168889', '/DataImage/user/avatar_userID1.png', '0');
 
 -- --------------------------------------------------------
 
