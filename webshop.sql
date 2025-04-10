@@ -125,7 +125,7 @@ CREATE TABLE `client` (
   `address` varchar(50) DEFAULT NULL,
   `phone` varchar(15) DEFAULT NULL,
   `image` text DEFAULT 'DataImage/user/avatar_userID1.png',
-  `role` varchar(11) NOT NULL DEFAULT '0'
+  `role` varchar(11) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
