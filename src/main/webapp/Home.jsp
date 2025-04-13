@@ -18,7 +18,8 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WebShop</title>
+<title>Camsport Shop</title>
+<link rel="icon" href="/style/assets/images/logoShop/LOGO CAMSPORT.png" type="image/png">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
 <script
@@ -28,11 +29,10 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 	rel="stylesheet" />
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet"
-	href="/style/assets/css/stylePageHome.css">
+	rel="stylesheet" 
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/style/assets/css/stylePageHome.css">
 
 <script type="text/javascript">
         $(document).on('ready', function () {
@@ -62,7 +62,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 <body>
 	<%@ include file="/Pages/MasterPage/Header.jsp"%>
 	<div id="main-home">
-		<div class="sw" style="width: auto;">
+		<!-- <div class="sw" style="width: auto;">
 			<form method="get"
 				action="<%=request.getContextPath() + "/Trangchu/ProductMenu"%>">
 				<input type="search" name="search" class="search"
@@ -79,7 +79,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 					src="/style/assets/images/logoShop/LOGO CAMSPORT.png" alt="">
 				</a>
 			</form>
-		</div>
+		</div> -->
 
 		<div class="slider">
 			<div class="slideshow-container">

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Error</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/style/assets/css/erorPage.css">
 </head>
 <body>

@@ -1,9 +1,7 @@
 services:
   # Web application
   webapp:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: tomcat:9.0-jdk11-openjdk-slim
     ports:
       - "8081:8080"
     depends_on:
@@ -16,6 +14,9 @@ services:
       - DB_PASSWORD=webshop_password
     networks:
       - webshop-network
+    volumes:
+      - ./src/main/webapp:/usr/local/tomcat/webapps/ROOT
+      - ./target/classes:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes
     restart: unless-stopped
 
   # MySQL Database

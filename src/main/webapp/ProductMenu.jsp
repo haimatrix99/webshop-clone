@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Sản Phẩm</title>
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/style/assets/css/stylePageHome.css">
 </head>

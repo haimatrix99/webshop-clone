@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 -- Cấu trúc bảng cho bảng `attendance`
 --
 
-CREATE TABLE `attendance` (
+CREATE TABLE IF NOT EXISTS `attendance` (
   `id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `checkin_time` datetime DEFAULT NULL,
@@ -51,7 +51,7 @@ INSERT INTO `attendance` (`id`, `employee_id`, `checkin_time`, `checkout_time`, 
 -- Cấu trúc bảng cho bảng `bookings`
 --
 
-CREATE TABLE `bookings` (
+CREATE TABLE IF NOT EXISTS `bookings` (
   `id` int(11) NOT NULL,
   `customer_name` varchar(100) NOT NULL,
   `phone` varchar(15) NOT NULL,
@@ -73,7 +73,7 @@ INSERT INTO `bookings` (`id`, `customer_name`, `phone`, `court_name`, `booking_d
 -- Cấu trúc bảng cho bảng `cart`
 --
 
-CREATE TABLE `cart` (
+CREATE TABLE IF NOT EXISTS `cart` (
   `cartID` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `feature` varchar(50) DEFAULT NULL,
@@ -94,7 +94,7 @@ INSERT INTO `cart` (`cartID`, `quantity`, `feature`, `client_clientID`, `product
 -- Cấu trúc bảng cho bảng `category`
 --
 
-CREATE TABLE `category` (
+CREATE TABLE IF NOT EXISTS `category` (
   `categoryID` int(11) NOT NULL,
   `nameCategory` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -115,7 +115,7 @@ INSERT INTO `category` (`categoryID`, `nameCategory`) VALUES
 -- Cấu trúc bảng cho bảng `client`
 --
 
-CREATE TABLE `client` (
+CREATE TABLE IF NOT EXISTS `client` (
   `clientID` int(11) NOT NULL,
   `user` varchar(50) DEFAULT NULL,
   `pass` varchar(50) DEFAULT NULL,
@@ -144,7 +144,7 @@ INSERT INTO `client` (`clientID`, `user`, `pass`, `money`, `fullname`, `birthday
 -- Cấu trúc bảng cho bảng `product`
 --
 
-CREATE TABLE `product` (
+CREATE TABLE IF NOT EXISTS `product` (
   `productID` int(11) NOT NULL,
   `product` varchar(100) DEFAULT NULL,
   `priceO` varchar(20) DEFAULT NULL,
@@ -179,7 +179,7 @@ INSERT INTO `product` (`productID`, `product`, `priceO`, `priceS`, `img`, `numso
 -- Cấu trúc bảng cho bảng `shop`
 --
 
-CREATE TABLE `shop` (
+CREATE TABLE IF NOT EXISTS `shop` (
   `shopID` int(11) NOT NULL,
   `user` varchar(50) NOT NULL,
   `pass` varchar(45) CHARACTER SET armscii8 COLLATE armscii8_general_ci NOT NULL,
@@ -194,6 +194,18 @@ CREATE TABLE `shop` (
 
 INSERT INTO `shop` (`shopID`, `user`, `pass`, `nameShop`, `numFollower`, `urlAvatar`) VALUES
 (1, 'camsport', '123456', 'CAMSPORT', '14800', '/style/assets/images/logoShop/LOGO CAMSPORT.png');
+
+--
+-- Cấu trúc bảng cho bảng `comment`
+--
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `commentID` int(11) NOT NULL,
+  `comment` varchar(50) NOT NULL,
+  `date` datetime NOT NULL,
+  `client_clientID` int(11) NOT NULL,
+  `product_productID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -247,6 +259,14 @@ ALTER TABLE `shop`
   ADD PRIMARY KEY (`shopID`);
 
 --
+-- Chỉ mục cho bảng `comment`
+--
+ALTER TABLE `comment`
+  ADD PRIMARY KEY (`commentID`),
+  ADD KEY `fk_comment_client_idx` (`client_clientID`),
+  ADD KEY `fk_comment_product_idx` (`product_productID`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -293,6 +313,12 @@ ALTER TABLE `shop`
   MODIFY `shopID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT cho bảng `comment`
+--
+ALTER TABLE `comment`
+  MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- Các ràng buộc cho các bảng đã đổ
 --
 
@@ -315,6 +341,14 @@ ALTER TABLE `cart`
 ALTER TABLE `product`
   ADD CONSTRAINT `fk_product_category` FOREIGN KEY (`category_categoryID`) REFERENCES `category` (`categoryID`),
   ADD CONSTRAINT `fk_product_shop1` FOREIGN KEY (`shop_shopID`) REFERENCES `shop` (`shopID`);
+
+--
+-- Các ràng buộc cho bảng `comment`
+--
+ALTER TABLE `comment`
+  ADD CONSTRAINT `fk_comment_client` FOREIGN KEY (`client_clientID`) REFERENCES `client` (`clientID`),
+  ADD CONSTRAINT `fk_comment_product` FOREIGN KEY (`product_productID`) REFERENCES `product` (`productID`);
+  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
