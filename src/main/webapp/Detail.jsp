@@ -39,8 +39,8 @@
 }
 </style>
 </head>
+<%@ include file="Pages/MasterPage/Header.jsp"%>
 <body>
-	<%@ include file="Pages/MasterPage/Header.jsp"%>
 
 	<%
 	Product p = (Product) request.getAttribute("product");
@@ -48,7 +48,7 @@
 	ArrayList<Comment> commentList =(ArrayList<Comment>) request.getAttribute("comments");
 	%>
 
-	<div class="container">
+	<div class="container" style="margin-top: 100px">
 		<div class="heading-section"></div>
 		<div class="row">
 			<div class="col-md-6">

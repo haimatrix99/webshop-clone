@@ -10,8 +10,8 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/style/assets/css/stylePageHome.css">
 </head>
+<%@ include file="/Pages/MasterPage/Header.jsp"%>
 <body>
-	<%@ include file="/Pages/MasterPage/Header.jsp"%>
 	<div class="Products" style="margin-top: 60px">
 		<%
 		ArrayList<Product> productList = (ArrayList<Product>) request.getAttribute("productList");

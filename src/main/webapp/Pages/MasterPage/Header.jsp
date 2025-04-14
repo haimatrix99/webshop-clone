@@ -16,8 +16,7 @@
 <style>
 .logo {
 	width: 100px;
-	display: block;
-	margin: 0 auto;
+	margin: auto 0;
 }
 
 .navbar {
@@ -28,18 +27,6 @@
 	z-index: 999;
 	padding: 0;
 	background-color: #ee4d2d;
-}
-
-.account:hover .nav-account {
-	display: block;
-}
-
-.nav-account {
-	display: none;
-}
-
-.navbar-brand {
-	padding: 0;
 }
 
 a {
@@ -65,22 +52,19 @@ a {
 .navbar-start {
 	flex: 1;
 	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	justify-content: flex-end;
 }
 
 .navbar-center {
 	flex: 2;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 .navbar-end {
 	flex: 1;
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
+	justify-content: flex-start;
 }
 
 /* Cart icon styling */
@@ -108,7 +92,7 @@ a {
 /* Search Navbar Styles */
 .search-navbar {
 	position: fixed;
-	top: -70px;
+	top: -110px;
 	left: 0;
 	width: 100%;
 	background-color: #ee4d2d;
@@ -121,29 +105,25 @@ a {
 }
 
 .search-navbar.active {
-	transform: translateY(70px);
+	transform: translateY(100px);
 }
 
 .search-navbar-start {
 	flex: 1;
 	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	justify-content: flex-end;
 }
 
 .search-navbar-center {
 	flex: 2;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 }
 
 .search-navbar-end {
 	flex: 1;
 	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 20px;
+	justify-content: flex-start;
 }
 
 .search-form {
@@ -179,7 +159,6 @@ a {
 	color: white;
 	font-size: 20px;
 	cursor: pointer;
-	margin-left: 15px;
 }
 
 /* Responsive adjustments */
@@ -212,7 +191,7 @@ if (accesser != null && accesser.equals("user")) {
 %>
 
 <nav class="navbar">
-	<div class="navbar-container">
+	<div class="navbar-menu">
 		<!-- Left Column - Logo and Home -->
 		<div class="navbar-start">
 			<a href="#" class="logo" title="Tuulkit">
@@ -263,16 +242,6 @@ if (accesser != null && accesser.equals("user")) {
 										<strong>Stay up to date!</strong>
 									</div>
 								</div>
-								<div class="level-right">
-									<div class="level-item">
-										<a class="button bd-is-rss is-small" href="#">
-											<span class="icon is-small">
-												<i class="fa fa-rss"></i>
-											</span>
-											<span>Subscribe</span>
-										</a>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -312,42 +281,41 @@ if (accesser != null && accesser.equals("user")) {
 		<div class="navbar-end">
 			<!-- Search Icon -->
 			<a class="navbar-item" id="search-toggle" href="javascript:void(0);" style="color: #FFFF;">
-				<i class="fa fa-search" aria-hidden="true" style="font-size: 20px;"></i>
+				<i class="fa fa-search" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
 			</a>
 			
 			<!-- Account Icon -->
-			<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account" style="color: #FFFF;">
-				<i class="fa fa-user" aria-hidden="true" style="font-size: 20px;"></i>
-			</a>
+			<div class="navbar-item has-dropdown is-hoverable">
+				<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account" style="color: #FFFF;">
+					<i class="fa fa-user" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
+				</a>
+		
+				<div class="navbar-dropdown">
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
+					Đăng Nhập
+				  </a>
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
+					Đăng Ký
+				  </a>
+				</div>
+			  </div>
 			
 			<!-- Cart Icon with Counter -->
 			<a class="navbar-item cart-icon-container" href="<%=request.getContextPath()%>/Trangchu/GioHang" style="color: #FFFF;">
-				<i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 20px;"></i>
+				<i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
 				<span <%=client == null || itemsCartList.size() == 0 ? "class=\"close\"" : "class=\"cart-count\""%>>
 					<% if (client != null) { out.print(itemsCartList.size()); } %>
 				</span>
 			</a>
 		</div>
 	</div>
-
-	<!-- Mobile Burger Menu -->
-	<div class="navbar-burger burger" data-target="navMenubd-example" style="position: absolute; top: 10px; right: 10px;">
-		<span></span>
-		<span></span>
-		<span></span>
-	</div>
-
-	<!-- Mobile Menu Content -->
-	<div id="navMenubd-example" class="navbar-menu">
-		<!-- Mobile menu content goes here (for responsive design) -->
-	</div>
 </nav>
 
 <!-- Search Navbar -->
-<div class="search-navbar" id="search-navbar">
+<nav class="search-navbar" id="search-navbar">
 	<div class="search-navbar-start">
 		<a href="#" class="logo" title="Tuulkit">
-			<img src="/style/assets/images/logoShop/LOGO CAMSPORT.png" alt="Logo" style="width: 70px;">
+			<img src="/style/assets/images/logoShop/LOGO CAMSPORT.png" alt="Logo">
 		</a>
 	</div>
 	
@@ -359,27 +327,19 @@ if (accesser != null && accesser.equals("user")) {
 			</button>
 		</form>
 	</div>
-	
-	<div class="search-navbar-end">
-		<!-- Account Icon -->
-		<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account" style="color: #FFFF;">
-			<i class="fa fa-user" aria-hidden="true" style="font-size: 20px;"></i>
+
+	<div class="navbar-end">
+		<!-- Search Icon -->
+		<a class="navbar-item" id="search-toggle" href="javascript:void(0);" style="color: #FFFF;">
+			<i class="fa fa-search" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
 		</a>
 		
 		<!-- Cart Icon with Counter -->
-		<a class="navbar-item cart-icon-container" href="<%=request.getContextPath()%>/Trangchu/GioHang" style="color: #FFFF;">
-			<i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 20px;"></i>
-			<span <%=client == null || itemsCartList.size() == 0 ? "class=\"close\"" : "class=\"cart-count\""%>>
-				<% if (client != null) { out.print(itemsCartList.size()); } %>
-			</span>
+		<a class="navbar-item" id="search-close" style="color: #FFFF;">
+			<i class="fa fa-times" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
 		</a>
-		
-		<!-- Close search button -->
-		<button class="search-close" id="search-close">
-			<i class="fa fa-times" aria-hidden="true"></i>
-		</button>
 	</div>
-</div>
+</nav>
 
 <script>
 // JavaScript for search navbar transition
@@ -398,6 +358,16 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	searchClose.addEventListener('click', function() {
 		searchNavbar.classList.remove('active');
+	});
+	
+	// Close search navbar when clicking outside of it
+	document.addEventListener('click', function(event) {
+		if (searchNavbar.classList.contains('active') && 
+			!searchNavbar.contains(event.target) && 
+			event.target !== searchToggle && 
+			!searchToggle.contains(event.target)) {
+			searchNavbar.classList.remove('active');
+		}
 	});
 });
 </script>
