@@ -7,6 +7,7 @@ public class Booking {
     private String courtName;
     private String bookingDate;
     private String timeSlot;
+    private Integer clientId;
 
     public Booking() {
     }
@@ -19,7 +20,17 @@ public class Booking {
         this.timeSlot = timeSlot;
     }
 
-	public int getId() {
+    public Booking(String customerName, String phone, String courtName, String bookingDate, String timeSlot,
+            Integer clientId) {
+        this.customerName = customerName;
+        this.phone = phone;
+        this.courtName = courtName;
+        this.bookingDate = bookingDate;
+        this.timeSlot = timeSlot;
+        this.clientId = clientId;
+    }
+
+    public int getId() {
         return id;
     }
 
@@ -65,5 +76,13 @@ public class Booking {
 
     public void setTimeSlot(String timeSlot) {
         this.timeSlot = timeSlot;
+    }
+
+    public Integer getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 }

@@ -2,6 +2,7 @@
 <%@page import="model.entities.Category"%>
 <%@page import="model.entities.Shop"%>
 <%@page import="model.entities.Product"%>
+<%@page import="model.entities.Booking"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -50,14 +51,10 @@ body {
 	background-image: linear-gradient(147deg, #FFE53B 0%, #FF2525 100%);
 }
 
-@media ( min-width : 1200px) .container {
-	max-width
-	:
-	 
-	100
-	%;
-	
-
+@media (min-width: 1200px) {
+	.container {
+		max-width: 100%;
+	}
 }
 </style>
 <style>
@@ -274,7 +271,7 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 </div>
 	<div class="container py-5" style="max-width: 100%;">
 		<header class="text-center text-white">
-			<h1 class="display-4">QUản lý sản phẩm</h1>
+			<h1 class="display-4">Quản lý sản phẩm</h1>
 		</header>
 		<div class="row py-5">
 			<div class="col-lg-10 mx-auto">
@@ -375,6 +372,159 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 			</div>
 		</div>
 	</div>
+	
+	<!-- Booking History Section -->
+	<div class="container py-5" style="max-width: 100%;">
+		<header class="text-center text-white">
+			<h1 class="display-4">Lịch sử đặt sân</h1>
+		</header>
+		
+		<%
+		Boolean cancelResult = (Boolean) session.getAttribute("cancelResult");
+		if (cancelResult != null) {
+			if (cancelResult) {
+				session.removeAttribute("cancelResult");
+		%>
+		<div class="alert alert-success text-center" role="alert">
+			Hủy đặt sân thành công!
+		</div>
+		<%
+			} else {
+				session.removeAttribute("cancelResult");
+		%>
+		<div class="alert alert-danger text-center" role="alert">
+			Không thể hủy đặt sân!
+		</div>
+		<%
+			}
+		}
+		
+		Boolean confirmResult = (Boolean) session.getAttribute("confirmResult");
+		if (confirmResult != null) {
+			if (confirmResult) {
+				session.removeAttribute("confirmResult");
+		%>
+		<div class="alert alert-success text-center" role="alert">
+			Xác nhận đặt sân thành công!
+		</div>
+		<%
+			} else {
+				session.removeAttribute("confirmResult");
+		%>
+		<div class="alert alert-danger text-center" role="alert">
+			Không thể xác nhận đặt sân!
+		</div>
+		<%
+			}
+		}
+		%>
+		
+		<!-- Search Form for Bookings -->
+		<div class="row justify-content-center mb-4">
+			<div class="col-lg-8">
+				<div class="card">
+					<div class="card-body">
+						<form method="get" action="<%=request.getContextPath()%>/Trangchu/OwnerShop">
+							<div class="form-row d-flex justify-content-between">
+								<div class="form-group col-md-3">
+									<label for="courtName">Sân:</label>
+									<select id="courtName" name="courtName" class="form-control">
+										<option value="">Tất cả</option>
+										<option value="Sân 1">Sân 1</option>
+										<option value="Sân 2">Sân 2</option>
+										<option value="Sân 3">Sân 3</option>
+									</select>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="bookingDate">Ngày:</label>
+									<input type="date" id="bookingDate" name="bookingDate" class="form-control">
+								</div>
+								<div class="form-group col-md-3">
+									<label for="timeSlot">Giờ:</label>
+									<select id="timeSlot" name="timeSlot" class="form-control">
+										<option value="">Tất cả</option>
+										<option value="08:00 - 10:00">08:00 - 10:00</option>
+										<option value="10:00 - 12:00">10:00 - 12:00</option>
+										<option value="14:00 - 16:00">14:00 - 16:00</option>
+										<option value="16:00 - 18:00">16:00 - 18:00</option>
+									</select>
+								</div>
+								<div class="form-group col-md-2 d-flex align-items-end">
+									<button type="submit" class="btn btn-primary btn-block">Tìm kiếm</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row py-5">
+			<div class="col-lg-10 mx-auto">
+				<div class="card rounded shadow border-0">
+					<div></div>
+					<div class="card-body p-5 bg-white rounded">
+						<div class="table-responsive">
+							<table id="bookingTable" style="width: 100%"
+								class="table table-striped table-bordered">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Khách hàng</th>
+										<th>SĐT</th>
+										<th>Sân</th>
+										<th>Ngày đặt</th>
+										<th>Khung giờ</th>
+										<th>Trạng thái</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%
+									List<Booking> bookingList = (List<Booking>) request.getAttribute("bookingList");
+									if (bookingList != null && !bookingList.isEmpty()) {
+										for (Booking booking : bookingList) {
+									%>
+									<tr>
+										<td><%=booking.getId()%></td>
+										<td><%=booking.getCustomerName()%></td>
+										<td><%=booking.getPhone()%></td>
+										<td><%=booking.getCourtName()%></td>
+										<td><%=booking.getBookingDate()%></td>
+										<td><%=booking.getTimeSlot()%></td>
+										<td style="min-width: 80px">
+											<form id="CANCEL_form_<%=booking.getId()%>" method="post"
+												style="display: contents" action="<%=request.getContextPath()%>/Trangchu/OwnerShop">
+												<input type="text" name="type" style="display: none"
+													value="CANCEL"></input>
+												<input type="text" name="bookingID" style="display: none"
+													value="<%=booking.getId()%>"></input>
+												<button
+													style="background-color: #E34724; border-radius: 8%; color: antiquewhite;"
+													onclick="return confirm('Bạn có chắc chắn muốn hủy đặt sân này không?')">
+													<i class="fa fa-times" aria-hidden="true"></i>
+												</button>
+											</form>
+										</td>
+									</tr>
+									<%
+										}
+									} else {
+									%>
+									<tr>
+										<td colspan="8">Không có lịch sử đặt sân</td>
+									</tr>
+									<%
+									}
+									%>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<section id="contact" class="close" style="z-index: 9;">
 		<div class="contact-box">
 			<div class="contact-links">
@@ -464,7 +614,7 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
 			})
 			$(document).ready(function() {
 				$('#example').DataTable();
-				// $('#example2').DataTable();
+				$('#bookingTable').DataTable();
 			});
 		});
 	</script>

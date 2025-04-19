@@ -10,8 +10,8 @@
     <title>Chấm Công Nhân Viên</title>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/style/assets/css/attendance.css">
 </head>
-<body>
 <%@ include file="/Pages/MasterPage/Header.jsp"%>
+<body>
     <div class="container">
         <h1 style ="font-size:40px">Chấm Công Nhân Viên</h1>
 		<h1 style ="font-size:30px">Xin chào, <%= client.getFullName() %></h1>

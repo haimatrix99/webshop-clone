@@ -4,6 +4,7 @@
 <%@page import="model.entities.Category"%>
 <%@page import="model.entities.Cart"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="model.entities.Product"%>
 <%@page import="model.entities.Client"%>
 <%@page import="common.Constants"%>
@@ -73,13 +74,13 @@ a {
 }
 
 .cart-count {
-	height: 18px;
-	width: 18px;
+	height: 20px;
+	width: 20px;
 	background-color: darkorange;
 	border-radius: 50%;
 	position: absolute;
-	top: -8px;
-	right: -8px;
+	top: -10px;
+	right: -15px;
 	font-size: small;
 	text-align: center;
 	color: white;
@@ -182,12 +183,17 @@ Client client = null;
 ArrayList<Cart> itemsCartList = new ArrayList<Cart>();
 ArrayList<Category> categoryList = new ArrayList<Category>();
 categoryList = CategoryBO.getCategorysInData();
+
+// Get cart for logged in users
 if (accesser != null && accesser.equals("user")) {
 	client = (Client) ses.getAttribute("user");
 	client = client != null ? ClientBO.getClientById(client.getId()) : null;
-	itemsCartList = client != null ? (ArrayList<Cart>) CartBO.getItemsCartByClient(client.getId()) : null;
+	itemsCartList = client != null ? (ArrayList<Cart>) CartBO.getItemsCartByClient(client.getId()) : new ArrayList<Cart>();
 	ses.setAttribute("itemsCartList", itemsCartList);
 }
+
+// Get session cart for non-logged in users
+List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
 %>
 
 <nav class="navbar">
@@ -288,24 +294,53 @@ if (accesser != null && accesser.equals("user")) {
 			<div class="navbar-item has-dropdown is-hoverable">
 				<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account" style="color: #FFFF;">
 					<i class="fa fa-user" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
+					<% if (accesser != null && client != null && accesser.equals("user")) { %>
+					<span style="color: #FFFF; margin-left: 5px;"><%= client.getFullName() %></span>
+					<% } %>
 				</a>
 		
 				<div class="navbar-dropdown">
+				  <% if (accesser != null && client != null && accesser.equals("user")) { %>
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account">
+					Tài Khoản
+				  </a>
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/GioHang">
+					Đơn Hàng
+				  </a>
+				  <hr class="navbar-divider">
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
+					Đăng Xuất
+				  </a>
+				  <% } else { %>
 				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
 					Đăng Nhập
 				  </a>
 				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
 					Đăng Ký
 				  </a>
+				  <% } %>
 				</div>
-			  </div>
+			</div>
 			
 			<!-- Cart Icon with Counter -->
 			<a class="navbar-item cart-icon-container" href="<%=request.getContextPath()%>/Trangchu/GioHang" style="color: #FFFF;">
-				<i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 20px; padding: 20px;"></i>
-				<span <%=client == null || itemsCartList.size() == 0 ? "class=\"close\"" : "class=\"cart-count\""%>>
-					<% if (client != null) { out.print(itemsCartList.size()); } %>
-				</span>
+				<div class="cart-icon-container" style="padding: 20px;">
+					<i class="fa fa-shopping-cart" aria-hidden="true" style="font-size: 20px;"></i>
+					<span <%=
+					// Show cart count for both logged in and non-logged in users
+					(client != null && itemsCartList != null && !itemsCartList.isEmpty()) || 
+					(client == null && sessionCart != null && !sessionCart.isEmpty()) ? 
+					"class=\"cart-count\"" : "class=\"close\"" 
+				%>>
+					<% 
+					if (client != null && itemsCartList != null) {
+						out.print(itemsCartList.size());
+					} else if (sessionCart != null) {
+						out.print(sessionCart.size());
+					}
+					%>
+					</span>
+				</div>
 			</a>
 		</div>
 	</div>

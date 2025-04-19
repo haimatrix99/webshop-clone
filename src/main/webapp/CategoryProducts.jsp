@@ -127,9 +127,13 @@ ArrayList<Product> productList = (ArrayList<Product>) request.getAttribute("prod
                                     </button>
                                 </form>
                                 <% } else { %>
-                                <button class="btn btn--buyticket js--btn--buyticket" style="padding: 5px 10px; font-size: 12px;">
-                                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                                </button>
+                                <form method="post">
+                                    <input style="display: none" name="productID" value="<%=product.getId()%>">
+                                    <input style="display: none" name="categoryId" value="<%=categoryId%>">
+                                    <button onclick="showAlert()" class="btn btn--buyticket js--btn--buyticket" style="padding: 5px 10px; font-size: 12px;">
+                                        <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                                    </button>
+                                </form>
                                 <% } %>
                             </div>
                         </div>

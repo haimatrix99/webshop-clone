@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.BOs.BookingBO;
 import model.BOs.CategoryBO;
 import model.BOs.ProductBO;
+import model.entities.Booking;
 import model.entities.Product;
 import model.entities.Shop;
 
@@ -24,6 +26,7 @@ public class OwnerShopServlet extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	ArrayList<Product> productList = new ArrayList<Product>();
+	ArrayList<Booking> bookingList = new ArrayList<Booking>();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +38,11 @@ public class OwnerShopServlet extends HttpServlet {
 		productList = ProductBO.getProductsByShop(shop.getId());
 		req.setAttribute("productList", productList);
 		req.setAttribute("categoryList", CategoryBO.getCategorysInData());
+		String courtName = req.getParameter("courtName");
+		String bookingDate = req.getParameter("bookingDate");
+		String timeSlot = req.getParameter("timeSlot");
+		bookingList = BookingBO.findAll(courtName, bookingDate, timeSlot);
+		req.setAttribute("bookingList", bookingList);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Pages/ManegerPage/OwnerShop.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -55,36 +63,42 @@ public class OwnerShopServlet extends HttpServlet {
 		String method = (String) req.getParameter("type");
 		System.out.println(method);
 		switch (method) {
-		case "ADD":
-			product = (String) req.getParameter("product");
-			priceO = (String) req.getParameter("priceO");
-			priceS = (String) req.getParameter("priceS");
-			url = (String) req.getParameter("url");
-			shopID = Integer.parseInt(req.getParameter("shopID"));
-			categoryID = Integer.parseInt(req.getParameter("categoryID"));
-			ProductBO.addProductToData(new Product(0, product, priceO, priceS, url, shopID, categoryID));
-			break;
-		case "DELETE":
-			productID = Integer.parseInt(req.getParameter("pID"));
-			ProductBO.deleteProductInData(productID);
-			break;
-		case "PUT":
-			productID = Integer.parseInt((String) req.getParameter("id"));
-			product = (String) req.getParameter("product");
-			priceO = (String) req.getParameter("priceO");
-			priceS = (String) req.getParameter("priceS");
-			url = (String) req.getParameter("url");
-			shopID = Integer.parseInt(req.getParameter("shopID"));
-			try {
-				System.out.println(req.getParameter("categoryID"));
+			case "ADD":
+				product = (String) req.getParameter("product");
+				priceO = (String) req.getParameter("priceO");
+				priceS = (String) req.getParameter("priceS");
+				url = (String) req.getParameter("url");
+				shopID = Integer.parseInt(req.getParameter("shopID"));
 				categoryID = Integer.parseInt(req.getParameter("categoryID"));
-			} catch (Exception e) {
-				categoryID = Integer.parseInt(req.getParameter("category0-ID"));
-			}
-			ProductBO.updateProductInData(new Product(productID, product, priceO, priceS, url, shopID, categoryID));
-			break;
-		default:
-			break;
+				ProductBO.addProductToData(new Product(0, product, priceO, priceS, url, shopID, categoryID));
+				break;
+			case "DELETE":
+				productID = Integer.parseInt(req.getParameter("pID"));
+				ProductBO.deleteProductInData(productID);
+				break;
+			case "PUT":
+				productID = Integer.parseInt((String) req.getParameter("id"));
+				product = (String) req.getParameter("product");
+				priceO = (String) req.getParameter("priceO");
+				priceS = (String) req.getParameter("priceS");
+				url = (String) req.getParameter("url");
+				shopID = Integer.parseInt(req.getParameter("shopID"));
+				try {
+					System.out.println(req.getParameter("categoryID"));
+					categoryID = Integer.parseInt(req.getParameter("categoryID"));
+				} catch (Exception e) {
+					categoryID = Integer.parseInt(req.getParameter("category0-ID"));
+				}
+				ProductBO.updateProductInData(new Product(productID, product, priceO, priceS, url, shopID, categoryID));
+				break;
+			case "CANCEL":
+				int bookingId = Integer.parseInt(req.getParameter("bookingID"));
+				boolean canceled = BookingBO.cancelBookingByOwner(bookingId);
+				HttpSession session = req.getSession();
+				session.setAttribute("cancelResult", canceled);
+				break;
+			default:
+				break;
 		}
 		resp.sendRedirect(req.getContextPath() + "/Trangchu/OwnerShop");
 	}

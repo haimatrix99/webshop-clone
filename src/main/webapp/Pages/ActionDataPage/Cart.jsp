@@ -3,6 +3,7 @@
 <%@page import="model.entities.Shop"%>
 <%@page import="model.entities.Product"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="model.entities.Cart"%>
 <%@page import="model.entities.Client"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -11,6 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="/style/assets/images/logoShop/LOGO CAMSPORT.png" type="image/png">
 <title>Giỏ Hàng</title>
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800"
@@ -50,9 +52,20 @@
 	<div class="container">
 		<section id="cart">
 			<%
+			// Get session cart for non-logged in users
+			List<Cart> displayCartList = null;
+			
+			if (client != null) {
+				// Use itemsCartList from Header.jsp for logged in users
+				displayCartList = itemsCartList;
+			} else {
+				// Use session cart for non-logged in users
+				displayCartList = (List<Cart>) session.getAttribute("sessionCart");
+			}
+			
 			long subtotal = 0;
-			if (itemsCartList != null) {
-				for (Cart cart : itemsCartList) {
+			if (displayCartList != null && !displayCartList.isEmpty()) {
+				for (Cart cart : displayCartList) {
 					Product product = ProductBO.getProductByID(cart.getProductID());
 					Shop shop = OwnerShopBO.getShopByID(product.getShopID());
 					subtotal += cart.getQuantity() * (Long.parseLong(product.getSalePrice()));
@@ -135,10 +148,21 @@
 						</div>
 						<%
 						if (subtotal != 0) {
-							if (subtotal + tax + 20000 <= Long.parseLong(client.getMoney()))
+							if (client != null) {
+								// For logged-in users, check their money balance
+								if (subtotal + tax + 20000 <= Long.parseLong(client.getMoney()))
+									out.print("<button class=\"btn btn-success\" style=\"width: 100%\">Checkout</button>");
+								else
+									out.print("<button class=\"btn btn-error\" style=\"width: 100%\">Checkout</button>");
+							} else {
+								// For non-logged users, offer sign-in or continue as guest
 								out.print("<button class=\"btn btn-success\" style=\"width: 100%\">Checkout</button>");
-							else
-								out.print("<button class=\"btn btn-error\" style=\"width: 100%\">Checkout</button>");
+								out.print("<div style=\"margin-top: 10px; text-align: center;\">");
+								out.print("<a href=\"" + request.getContextPath() + "/Trangchu/SignUpIn\" style=\"color: #ee4d2d; margin-right: 10px;\">Sign in</a>");
+								out.print("<span>or</span>");
+								out.print("<a href=\"#\" style=\"color: #ee4d2d; margin-left: 10px;\">Continue as guest</a>");
+								out.print("</div>");
+							}
 						} else
 							out.print("<button class=\"btn\" style=\"width: 100%\">Checkout</button>");
 						%>
@@ -209,30 +233,34 @@
 
 	</div>
 
-
 	<script type="text/javascript">
-let btn_eror= document.querySelector('.btn-eror');
-let btn_success= document.querySelector('.btn-success');
-if(btn_eror)
-	document.querySelector('.btn-eror').addEventListener('click',()=>{ 
-		document.getElementById('notify').classList.remove('close');
-		document.getElementById('error-box').classList.remove('close');
+	let btn_error = document.querySelector('.btn-error');
+	let btn_success = document.querySelector('.btn-success');
+	
+	if(btn_error) {
+		document.querySelector('.btn-error').addEventListener('click', () => { 
+			document.getElementById('notify').classList.remove('close');
+			document.getElementById('error-box').classList.remove('close');
+		});
+	}
+	
+	if(btn_success) {
+		document.querySelector('.btn-success').addEventListener('click', () => {
+			document.getElementById('notify').classList.remove('close');
+			document.getElementById('success-box').classList.remove('close');
+		});
+	}
+	
+	const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+	
+	buttons.forEach(button => {
+		button.addEventListener('click', () => {
+			// Đặt lại màu cho tất cả các nút
+			buttons.forEach(btn => btn.style.backgroundColor = 'orange');
+			// Thay đổi màu cho nút được nhấn
+			button.style.backgroundColor = 'blue';
+		});
 	});
-if(btn_success)
-	document.querySelector('.btn-success').addEventListener('click',()=>{
-		document.getElementById('notify').classList.remove('close');
-		document.getElementById('success-box').classList.remove('close');
-	});
-const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
-
-buttons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Đặt lại màu cho tất cả các nút
-        buttons.forEach(btn => btn.style.backgroundColor = 'orange');
-        // Thay đổi màu cho nút được nhấn
-        button.style.backgroundColor = 'blue';
-    });
-});
-</script>
+	</script>
 </body>
 </html>

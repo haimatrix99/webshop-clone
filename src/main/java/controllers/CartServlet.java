@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,26 +29,74 @@ public class CartServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
+
+		HttpSession ses = req.getSession();
+		Client client = (Client) ses.getAttribute("user");
+
 		String actionCart = (String) req.getParameter("actionCart");
 		if (actionCart != null) {
 			int cartID = Integer.parseInt(req.getParameter("cartID"));
 			int quantity;
-			switch (actionCart) {
-			case "remove":
-				CartBO.deleteItemInCart(cartID);
-				break;
-			case "plus":
-				quantity = Integer.parseInt(req.getParameter("quantity"));
-				CartBO.increaseItemInCart(cartID, quantity);
-				break;
-			case "minus":
-				quantity = Integer.parseInt(req.getParameter("quantity"));
-				CartBO.decreaseItemInCart(cartID, quantity);
-				break;
-			default:
-				break;
+
+			if (client != null) {
+				// Logged-in user - use database
+				switch (actionCart) {
+					case "remove":
+						CartBO.deleteItemInCart(cartID);
+						break;
+					case "plus":
+						quantity = Integer.parseInt(req.getParameter("quantity"));
+						CartBO.increaseItemInCart(cartID, quantity);
+						break;
+					case "minus":
+						quantity = Integer.parseInt(req.getParameter("quantity"));
+						CartBO.decreaseItemInCart(cartID, quantity);
+						break;
+					default:
+						break;
+				}
+			} else {
+				// Non-logged in user - use session
+				@SuppressWarnings("unchecked")
+				List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
+				if (sessionCart != null) {
+					switch (actionCart) {
+						case "remove":
+							for (int i = 0; i < sessionCart.size(); i++) {
+								if (sessionCart.get(i).getCartID() == cartID) {
+									sessionCart.remove(i);
+									break;
+								}
+							}
+							break;
+						case "plus":
+							quantity = Integer.parseInt(req.getParameter("quantity"));
+							for (Cart cart : sessionCart) {
+								if (cart.getCartID() == cartID) {
+									cart.setQuantity(quantity + 1);
+									break;
+								}
+							}
+							break;
+						case "minus":
+							quantity = Integer.parseInt(req.getParameter("quantity"));
+							for (Cart cart : sessionCart) {
+								if (cart.getCartID() == cartID) {
+									if (quantity > 1) {
+										cart.setQuantity(quantity - 1);
+									}
+									break;
+								}
+							}
+							break;
+						default:
+							break;
+					}
+					ses.setAttribute("sessionCart", sessionCart);
+				}
 			}
 		}
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Pages/ActionDataPage/Cart.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -57,21 +107,58 @@ public class CartServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
+
 		HttpSession ses = req.getSession();
 		Client client = (Client) ses.getAttribute("user");
+
 		String totalMoneyStr = req.getParameter("totalMoney");
-		if (totalMoneyStr != null) {
+		if (totalMoneyStr != null && client != null) {
 			long totalMoney = Long.parseLong(totalMoneyStr);
 			CartBO.paymentInCart(client.getId(), totalMoney);
 		}
+
 		String productIDStr = req.getParameter("productID");
-		String clientIDStr = req.getParameter("clientID");
-		if (productIDStr != null && clientIDStr != null) {
+		if (productIDStr != null) {
 			int productID = Integer.parseInt(req.getParameter("productID"));
-			int clientID = Integer.parseInt(req.getParameter("clientID"));
-			Cart cart = new Cart(0, 1, "", clientID, productID);
-			CartBO.addCartToData(cart);
+
+			if (client != null) {
+				// Logged-in user - add to database
+				String clientIDStr = req.getParameter("clientID");
+				if (clientIDStr != null) {
+					int clientID = Integer.parseInt(clientIDStr);
+					Cart cart = new Cart(0, 1, "", clientID, productID);
+					CartBO.addCartToData(cart);
+				}
+			} else {
+				// Non-logged in user - add to session
+				@SuppressWarnings("unchecked")
+				List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
+
+				if (sessionCart == null) {
+					sessionCart = new ArrayList<>();
+				}
+
+				// Check if product already exists in cart
+				boolean productExists = false;
+				for (Cart cart : sessionCart) {
+					if (cart.getProductID() == productID) {
+						cart.setQuantity(cart.getQuantity() + 1);
+						productExists = true;
+						break;
+					}
+				}
+
+				// If product doesn't exist, add it with a unique temporary ID
+				if (!productExists) {
+					int tempID = (int) (System.currentTimeMillis() % 100000);
+					Cart newCart = new Cart(tempID, 1, "", -1, productID);
+					sessionCart.add(newCart);
+				}
+
+				ses.setAttribute("sessionCart", sessionCart);
+			}
 		}
+
 		resp.sendRedirect(req.getContextPath() + "/Trangchu/GioHang");
 	}
 }

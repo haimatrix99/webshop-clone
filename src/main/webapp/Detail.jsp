@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Chi Tiết Sản Phẩm</title>
+<link rel="icon" href="/style/assets/images/logoShop/LOGO CAMSPORT.png" type="image/png">
 <link
 	href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
 	rel="stylesheet" id="bootstrap-css">
@@ -163,7 +165,7 @@
 									+ "</form>");
 								else
 									out.print(
-									"<form action='SignUpIn'><button class=\"round-black-btn\">Add to Cart</button></form>");
+									"<form method='post' action='GioHang'><input style='display: none' name='productID' value='" + p.getId() + "'><button class=\"round-black-btn\">Add to Cart</button></form>");
 								%>
 
 							</div>

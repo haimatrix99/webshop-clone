@@ -7,12 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Sản Phẩm</title>
+<link rel="icon" href="/style/assets/images/logoShop/LOGO CAMSPORT.png" type="image/png">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/style/assets/css/stylePageHome.css">
 </head>
 <%@ include file="/Pages/MasterPage/Header.jsp"%>
 <body>
-	<div class="Products" style="margin-top: 60px">
+	<div class="Products" style="padding-top: 100px">
 		<%
 		ArrayList<Product> productList = (ArrayList<Product>) request.getAttribute("productList");
 		for (Product product : productList) {
@@ -44,16 +45,23 @@
 					</div>
 					<div>
 						<%
-						if (accesser != null && accesser.equals("user") && client != null)
-							out.print("<form method='post'>" + "<input style='display: none' name='clientID' value='" + client.getId() + "'>"
-							+ "<input style='display: none' name='productID' value='" + product.getId() + "'>"
-							+ "<button class='btn btn--buyticket js--btn--buyticket'>Buy Now<i class='fa fa-cart-plus' aria-hidden='true' style='margin-left: 5px;'></i></button>"
-							+ "</form>");
-						else
-							out.print(
-							"<button class='btn btn--buyticket js--btn--buyticket'>Buy Now<i class='fa fa-cart-plus' aria-hidden='true' style='margin-left: 5px;'></i></button>");
+						if (accesser != null && accesser.equals("user") && client != null) {
 						%>
-
+						<form method="post">
+							<input style="display: none" name="clientID" value="<%=client.getId()%>">
+							<input style="display: none" name="productID" value="<%=product.getId()%>">
+							<button onclick="showAlert()" class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+						</form>
+						<%
+						} else {
+						%>
+						<form method="post">
+							<input style="display: none" name="productID" value="<%=product.getId()%>">
+							<button onclick="showAlert()" class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+						</form>
+						<%
+						}
+						%>
 					</div>
 				</div>
 			</div>
@@ -62,5 +70,10 @@
 		}
 		%>
 	</div>
+	<script>
+    function showAlert() {
+      alert("Thêm vào giỏ hàng thành công!");
+    }
+    </script>
 </body>
 </html>

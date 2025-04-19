@@ -249,7 +249,10 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 								<%
 								} else {
 								%>
-								<button class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+								<form method="post">
+									<input style="display: none" name="productID" value="<%=product.getId()%>">
+									<button onclick="showAlert()" class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+								</form>
 								<%
 								}
 								%>
@@ -359,7 +362,10 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 								<%
 								} else {
 								%>
-								<button class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+								<form method="post">
+									<input style="display: none" name="productID" value="<%=product.getId()%>">
+									<button onclick="showAlert()" class="btn btn--buyticket js--btn--buyticket">Add to Cart<i class="fa fa-cart-plus" aria-hidden="true" style="margin-left: 5px;"></i></button>
+								</form>
 								<%
 								}
 								%>

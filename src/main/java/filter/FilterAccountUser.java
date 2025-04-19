@@ -17,16 +17,16 @@ import model.entities.Client;
 /**
  * Servlet Filter implementation class FilterAccountUser
  */
-@WebFilter(urlPatterns = {"/Trangchu/Account","/Trangchu/GioHang","/Trangchu/DatSan","/Trangchu/Attendance"})
+@WebFilter(urlPatterns = { "/Trangchu/Account", "/Trangchu/Attendance" })
 public class FilterAccountUser implements Filter {
-       
-    /**
-     * @see HttpFilter#HttpFilter()
-     */
-    public FilterAccountUser() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpFilter#HttpFilter()
+	 */
+	public FilterAccountUser() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -38,14 +38,17 @@ public class FilterAccountUser implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest httpRequest=(HttpServletRequest) request;
-		HttpServletResponse httpResponse=(HttpServletResponse) response;
-		HttpSession ses=httpRequest.getSession();
-		String accesser=(String)ses.getAttribute("accesser");
-		Client client=(Client) ses.getAttribute("user");
-		if(accesser!=null && accesser.equals("user") && client!=null) chain.doFilter(request, response);
-		else httpResponse.sendRedirect(httpRequest.getContextPath()+"/Trangchu/SignUpIn");
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest httpRequest = (HttpServletRequest) request;
+		HttpServletResponse httpResponse = (HttpServletResponse) response;
+		HttpSession ses = httpRequest.getSession();
+		String accesser = (String) ses.getAttribute("accesser");
+		Client client = (Client) ses.getAttribute("user");
+		if (accesser != null && accesser.equals("user") && client != null)
+			chain.doFilter(request, response);
+		else
+			httpResponse.sendRedirect(httpRequest.getContextPath() + "/Trangchu/SignUpIn");
 	}
 
 	/**
