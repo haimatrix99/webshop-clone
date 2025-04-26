@@ -269,7 +269,7 @@ input:focus+label, input:valid+label, textarea:focus+label, textarea:valid+label
         <i class="fa fa-registered" aria-hidden="true"></i>
     </span>
     <button style="width: 100px; height: 40px; ">
-        <a href="<%=request.getContextPath()%>/Trangchu/SignUpIn" style="text-decoration: none; color: inherit;">Đăng Xuất</a>
+        <a href="<%=request.getContextPath()%>/Trangchu/Logout" style="text-decoration: none; color: inherit;">Đăng Xuất</a>
     </button>
 </div>
 	<div class="container py-5" style="max-width: 100%;">

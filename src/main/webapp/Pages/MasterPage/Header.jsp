@@ -311,7 +311,7 @@ List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
 					Giỏ Hàng
 				  </a>
 				  <hr class="navbar-divider">
-				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Logout">
 					Đăng Xuất
 				  </a>
 				  <% } else { %>
