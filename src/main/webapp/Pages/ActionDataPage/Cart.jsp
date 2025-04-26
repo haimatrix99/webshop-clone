@@ -182,7 +182,7 @@
 								// For non-logged users, offer sign-in or continue as guest
 								out.print("<button class=\"btn btn-success\" style=\"width: 100%\">Checkout</button>");
 								out.print("<div style=\"margin-top: 10px; text-align: center;\">");
-								out.print("<a href=\"" + request.getContextPath() + "/Trangchu/SignUpIn\" style=\"color: #ee4d2d; margin-right: 10px;\">Sign in</a>");
+								out.print("<a href=\"" + request.getContextPath() + "/Trangchu/SignUpIn?keepCart=true\" style=\"color: #ee4d2d; margin-right: 10px;\">Sign in</a>");
 								out.print("<span>or</span>");
 								out.print("<a href=\"#\" style=\"color: #ee4d2d; margin-left: 10px;\">Continue as guest</a>");
 								out.print("</div>");
