@@ -109,9 +109,9 @@ ArrayList<Product> productList = (ArrayList<Product>) request.getAttribute("prod
                         </div>
                         <div class="update--status" style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
                             <div>
-                                <div style="font-size: 12px; color: #757575;">
+                                <!-- <div style="font-size: 12px; color: #757575;">
                                     Đã bán <%=product.getNumsold()%>
-                                </div>
+                                </div> -->
                                 <div class="price" style="font-size: 16px; color: #ee4d2d; font-weight: bold;">
                                     <span><%=Product.formMoney(product.getSalePrice())%></span><span>₫</span>
                                 </div>

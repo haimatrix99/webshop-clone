@@ -402,6 +402,37 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `client_clientID` int(11) NOT NULL,
   `product_productID` int(11) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+-- --------------------------------------------------------
+--
+-- Cấu trúc bảng cho bảng `orders`
+--
+CREATE TABLE IF NOT EXISTS `orders` (
+  `orderID` int(11) NOT NULL,
+  `fullName` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(500) NOT NULL,
+  `phoneNumber` VARCHAR(20) NOT NULL,
+  `client_clientID` int(11) NOT NULL,
+  `totalAmount` BIGINT NOT NULL,
+  `status` VARCHAR(50) DEFAULT 'pending',
+  `orderDate` DATETIME NOT NULL
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `order_details` (
+  `orderDetailID` int(11) NOT NULL AUTO_INCREMENT,
+  `order_orderID` int(11) NOT NULL,
+  `product_productID` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` BIGINT NOT NULL,
+  PRIMARY KEY (`orderDetailID`),
+  KEY `fk_order_details_orders_idx` (`order_orderID`),
+  KEY `fk_order_details_product_idx` (`product_productID`),
+  CONSTRAINT `fk_order_details_orders` FOREIGN KEY (`order_orderID`) REFERENCES `orders` (`orderID`) ON DELETE CASCADE,
+  CONSTRAINT `fk_order_details_product` FOREIGN KEY (`product_productID`) REFERENCES `product` (`productID`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+-- Auto increment
+ALTER TABLE `order_details` 
+MODIFY `orderDetailID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 --
 -- Chỉ mục cho các bảng đã đổ
 --
@@ -458,6 +489,12 @@ ADD PRIMARY KEY (`commentID`),
   ADD KEY `fk_comment_client_idx` (`client_clientID`),
   ADD KEY `fk_comment_product_idx` (`product_productID`);
 --
+-- Chỉ mục cho bảng `orders`
+--
+ALTER TABLE `orders`
+ADD PRIMARY KEY (`orderID`),
+  ADD KEY `fk_orders_client_idx` (`client_clientID`);
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 --
@@ -507,6 +544,12 @@ MODIFY `shopID` int(11) NOT NULL AUTO_INCREMENT,
 --
 ALTER TABLE `comment`
 MODIFY `commentID` int(11) NOT NULL AUTO_INCREMENT,
+  AUTO_INCREMENT = 8;
+--
+-- AUTO_INCREMENT cho bảng `orders`
+--
+ALTER TABLE `orders`
+MODIFY `orderID` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 8;
 --
 -- Các ràng buộc cho các bảng đã đổ

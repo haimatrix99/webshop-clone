@@ -304,8 +304,11 @@ List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
 				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Account">
 					Tài Khoản
 				  </a>
+				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/Orders">
+					Lịch Sử Đơn Hàng
+				  </a>
 				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/GioHang">
-					Đơn Hàng
+					Giỏ Hàng
 				  </a>
 				  <hr class="navbar-divider">
 				  <a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/SignUpIn">

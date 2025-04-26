@@ -105,9 +105,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xaz0k14.webp"
 								alt="">
 						</div>
@@ -117,9 +115,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xw1j8c0.webp"
 								alt="">
 						</div>
@@ -129,9 +125,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m2afxjhum7i6d4.webp"
 								alt="">
 						</div>
@@ -141,9 +135,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xxg3o93.webp"
 								alt="">
 						</div>
@@ -153,9 +145,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xp0p0c6.webp"
 								alt="">
 						</div>
@@ -165,9 +155,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 				<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lszjdl9j9g2h14.webp"
 								alt="">
 						</div>
@@ -177,9 +165,7 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 					<div class="Product-hot">
 					<a href="">
 						<div>
-							<span class="span-hot"></span> <span class="spans"><p
-									style="color: #FFFF; font-size: 14px; text-align: center;">Đã
-									bán 11,1K</p></span> <img
+							<span class="span-hot"></span> <span class="spans"></span> <img
 								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xxg3o93.webp"
 								alt="">
 						</div>
@@ -228,10 +214,10 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 						</div>
 						<div class="update--status">
 							<div>
-								<div class="_2OiIy8 _3UxTxH"
+								<!-- <div class="_2OiIy8 _3UxTxH"
 									style="font-size: 12px; margin-top: 8px;">
 									Đã bán
-									<%=product.getNumsold()%></div>
+									<%=product.getNumsold()%></div> -->
 								<div class="price" style="font-size: 16px;">
 									<span class="_2SnSlL"><%=Product.formMoney(product.getSalePrice())%></span><span
 										class="_1KHyQl">₫</span>
@@ -302,12 +288,6 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 					<div>
 						<h1 style="font-size: 30px;"><%=shop.getNameShop()%></h1>
 					</div>
-					<div>
-						<button
-							style="background-color: #FFFF; color: #ee4d2d; margin-left: 20px;">
-							GHÉ THĂM <i class="fa fa-home" aria-hidden="true"></i>
-						</button>
-					</div>
 				</div>
 				<div
 					style="width: 95%; height: 4px; background-color: #aaa !important;"></div>
@@ -341,10 +321,10 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 						</div>
 						<div class="update--status">
 							<div>
-								<div class="_2OiIy8 _3UxTxH"
+								<!-- <div class="_2OiIy8 _3UxTxH"
 									style="font-size: 12px; margin-top: 8px;">
 									Đã bán
-									<%=product.getNumsold()%></div>
+									<%=product.getNumsold()%></div> -->
 								<div class="price" style="font-size: 16px;">
 									<span class="_2SnSlL"><%=Product.formMoney(product.getSalePrice())%></span><span
 										class="_1KHyQl">₫</span>

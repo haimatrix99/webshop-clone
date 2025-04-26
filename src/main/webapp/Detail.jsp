@@ -107,7 +107,7 @@
 									stars</label> <input type="radio" id="star1" name="rate" value="1" />
 								<label for="star1" title="text">1 star</label>
 							</div>
-							<span><%=p.getNumsold()%> Đã bán</span>
+							<!-- <span><%=p.getNumsold()%> Đã bán</span> -->
 						</div>
 						<div class="product-price-discount">
 							<span><%=Product.formMoney(p.getSalePrice())%>₫</span><span

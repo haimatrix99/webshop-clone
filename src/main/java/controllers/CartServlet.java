@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.BOs.CartBO;
+import model.BOs.OrderBO;
+import model.BOs.OrderDetailBO;
 import model.entities.Cart;
 import model.entities.Client;
 
@@ -111,12 +114,68 @@ public class CartServlet extends HttpServlet {
 		HttpSession ses = req.getSession();
 		Client client = (Client) ses.getAttribute("user");
 
+		// Check if this is an order submission (with customer info)
+		String fullName = req.getParameter("fullName");
+		String address = req.getParameter("address");
+		String phoneNumber = req.getParameter("phoneNumber");
 		String totalMoneyStr = req.getParameter("totalMoney");
-		if (totalMoneyStr != null && client != null) {
+		String createOrder = req.getParameter("createOrder");
+
+		if (fullName != null && address != null && phoneNumber != null && totalMoneyStr != null
+				&& createOrder != null) {
+			// This is a checkout form submission
+			long totalMoney = Long.parseLong(totalMoneyStr);
+
+			// Get cart items from form
+			String itemCountStr = req.getParameter("itemCount");
+			int itemCount = Integer.parseInt(itemCountStr);
+
+			// Prepare a map to store product IDs and quantities
+			HashMap<Integer, Integer> cartItems = new HashMap<>();
+
+			// Collect all cart items
+			for (int i = 0; i < itemCount; i++) {
+				int productID = Integer.parseInt(req.getParameter("productID_" + i));
+				int quantity = Integer.parseInt(req.getParameter("quantity_" + i));
+				long price = Long.parseLong(req.getParameter("price_" + i));
+
+				cartItems.put(productID, quantity);
+			}
+
+			// Create order with cart items for logged-in user
+			if (client != null) {
+				// Create order and store delivery information with all products
+				int orderID = OrderBO.createOrderWithProducts(fullName, address, phoneNumber, client.getId(),
+						totalMoney, cartItems);
+
+				if (orderID != -1) {
+					// Process payment and clear cart
+					CartBO.paymentInCart(client.getId(), totalMoney);
+				}
+			} else {
+				// For guest checkout
+				// Create order with a guest client ID (-1)
+				int orderID = OrderBO.createOrderWithProducts(fullName, address, phoneNumber, -1, totalMoney,
+						cartItems);
+
+				// Clear session cart after successful order
+				if (orderID != -1) {
+					ses.removeAttribute("sessionCart");
+				}
+			}
+
+			// Redirect to a success or thank you page
+			resp.sendRedirect(req.getContextPath() + "/Trangchu");
+			return;
+		}
+
+		// Original cart payment logic (without customer info)
+		if (totalMoneyStr != null && client != null && createOrder == null) {
 			long totalMoney = Long.parseLong(totalMoneyStr);
 			CartBO.paymentInCart(client.getId(), totalMoney);
 		}
 
+		// Original add to cart logic
 		String productIDStr = req.getParameter("productID");
 		if (productIDStr != null) {
 			int productID = Integer.parseInt(req.getParameter("productID"));

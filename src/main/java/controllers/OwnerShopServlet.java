@@ -13,8 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import model.BOs.BookingBO;
 import model.BOs.CategoryBO;
+import model.BOs.OrderBO;
 import model.BOs.ProductBO;
 import model.entities.Booking;
+import model.entities.Order;
 import model.entities.Product;
 import model.entities.Shop;
 
@@ -27,6 +29,7 @@ public class OwnerShopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<Product> productList = new ArrayList<Product>();
 	ArrayList<Booking> bookingList = new ArrayList<Booking>();
+	ArrayList<Order> orderList = new ArrayList<Order>();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,6 +46,11 @@ public class OwnerShopServlet extends HttpServlet {
 		String timeSlot = req.getParameter("timeSlot");
 		bookingList = BookingBO.findAll(courtName, bookingDate, timeSlot);
 		req.setAttribute("bookingList", bookingList);
+
+		// Get orders for this shop
+		orderList = OrderBO.getOrdersByShop(shop.getId());
+		req.setAttribute("orderList", orderList);
+
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/Pages/ManegerPage/OwnerShop.jsp");
 		dispatcher.forward(req, resp);
 	}
@@ -69,7 +77,15 @@ public class OwnerShopServlet extends HttpServlet {
 				priceS = (String) req.getParameter("priceS");
 				url = (String) req.getParameter("url");
 				shopID = Integer.parseInt(req.getParameter("shopID"));
-				categoryID = Integer.parseInt(req.getParameter("categoryID"));
+
+				// Add validation for categoryID
+				String categoryIDStr = req.getParameter("categoryID");
+				if (categoryIDStr != null && !categoryIDStr.trim().isEmpty()) {
+					categoryID = Integer.parseInt(categoryIDStr);
+				} else {
+					categoryID = 4;
+				}
+
 				ProductBO.addProductToData(new Product(0, product, priceO, priceS, url, shopID, categoryID));
 				break;
 			case "DELETE":
@@ -96,6 +112,10 @@ public class OwnerShopServlet extends HttpServlet {
 				boolean canceled = BookingBO.cancelBookingByOwner(bookingId);
 				HttpSession session = req.getSession();
 				session.setAttribute("cancelResult", canceled);
+				break;
+			case "COMPLETE_ORDER":
+				int orderID = Integer.parseInt(req.getParameter("orderID"));
+				OrderBO.updateOrderStatus(orderID, "completed");
 				break;
 			default:
 				break;

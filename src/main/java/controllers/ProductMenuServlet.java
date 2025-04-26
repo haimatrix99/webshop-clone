@@ -54,14 +54,28 @@ public class ProductMenuServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html; charset=UTF-8");
-		int productID = Integer.parseInt(req.getParameter("productID"));
+
+		String productIDParam = req.getParameter("productID");
+		if (productIDParam == null) {
+			// Handle the case where productID is not provided
+			resp.sendRedirect(req.getContextPath() + "/Trangchu/ProductMenu");
+			return;
+		}
+
+		int productID = Integer.parseInt(productIDParam);
 
 		HttpSession ses = req.getSession();
 		Client client = (Client) ses.getAttribute("user");
 
 		if (client != null) {
 			// Logged-in user - add to database
-			int clientID = Integer.parseInt(req.getParameter("clientID"));
+			String clientIDParam = req.getParameter("clientID");
+			if (clientIDParam == null) {
+				// Handle missing clientID
+				resp.sendRedirect(req.getContextPath() + "/Trangchu/ProductMenu");
+				return;
+			}
+			int clientID = Integer.parseInt(clientIDParam);
 			Cart cart = new Cart(0, 1, "", clientID, productID);
 			CartBO.addCartToData(cart);
 		} else {

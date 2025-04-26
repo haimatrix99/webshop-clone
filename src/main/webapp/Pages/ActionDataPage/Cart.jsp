@@ -103,6 +103,10 @@
 					</h2>
 				</footer>
 			</article>
+			<%
+				}
+			%>
+			
 			<footer id="site-footer">
 				<div class="container clearfix">
 					<div class="left">
@@ -112,9 +116,9 @@
 						</h3>
 						<h3 class="tax">
 							<b>Taxes (2%):</b> <span> <%
- long tax = Math.round((subtotal * 0.02));
- out.print(Product.formMoney(Long.toString(tax)));
- %></span> VNĐ
+							long tax = Math.round((subtotal * 0.02));
+							out.print(Product.formMoney(Long.toString(tax)));
+							%></span> VNĐ
 						</h3>
 						<h3 class="shipping">
 							<b>Shipping:</b> <span>20.000</span> VNĐ
@@ -127,25 +131,45 @@
 								VNĐ
 							</b>
 						</h1>
-						<!-- Thêm nút thanh toán bằng thẻ và tiền mặt -->
-						<div style="display: flex; gap: 10px; margin-bottom: 10px;">
-							<button class="btn btn-primary"
-								style="width: 45%; background-color: orange; border: none; padding: 8px; font-size: 14px;">
-								<img
-									src="https://png.pngtree.com/element_our/20200702/ourmid/pngtree-bank-card-icon-image_2292633.jpg"
-									alt="Thẻ"
-									style="width: 15px; margin-right: 5px; vertical-align: middle;">
-								Thanh toán bằng thẻ
-							</button>
-							<button class="btn btn-secondary"
-								style="width: 45%; background-color: orange; border: none; padding: 8px; font-size: 14px;">
-								<img
-									src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0d-k3OPUfL4hwijBNNzy9kcUwNMCw0cwugQ&s"
-									alt="Tiền mặt"
-									style="width: 15px; margin-right: 5px; vertical-align: middle;">
-								Thanh toán bằng tiền mặt
-							</button>
+						
+						<!-- Checkout Form -->
+						<% if (subtotal > 0) { %>
+						<div class="checkout-form" style="margin-bottom: 15px; background-color: #f8f8f8; padding: 15px; border-radius: 5px;">
+							<h3 style="margin-top: 0; margin-bottom: 10px; color: #333;">Thông tin giao hàng</h3>
+							<form method="post" id="checkoutForm">
+								<div style="margin-bottom: 10px;">
+									<input type="text" name="fullName" placeholder="Họ tên" required 
+										   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+								</div>
+								<div style="margin-bottom: 10px;">
+									<input type="text" name="address" placeholder="Địa chỉ" required 
+										   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+								</div>
+								<div style="margin-bottom: 10px;">
+									<input type="tel" name="phoneNumber" placeholder="Số điện thoại" required 
+										   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+								</div>
+								<input type="hidden" name="totalMoney" value="<%=subtotal + tax + 20000%>">
+								
+								<!-- Hidden inputs for cart items -->
+								<%
+								for (int i = 0; i < displayCartList.size(); i++) {
+									Cart cartItem = displayCartList.get(i);
+									Product cartProduct = ProductBO.getProductByID(cartItem.getProductID());
+									long itemPrice = Long.parseLong(cartProduct.getSalePrice());
+								%>
+									<input type="hidden" name="productID_<%=i%>" value="<%=cartItem.getProductID()%>">
+									<input type="hidden" name="quantity_<%=i%>" value="<%=cartItem.getQuantity()%>">
+									<input type="hidden" name="price_<%=i%>" value="<%=itemPrice%>">
+								<%
+								}
+								%>
+								<input type="hidden" name="itemCount" value="<%=displayCartList.size()%>">
+								<input type="hidden" name="createOrder" value="true">
+							</form>
 						</div>
+						<% } %>
+						
 						<%
 						if (subtotal != 0) {
 							if (client != null) {
@@ -171,48 +195,16 @@
 			</footer>
 			<div id="notify" class="close">
 				<div id="success-box" class="close">
-					<span></span>
-					<div class="dot"></div>
-					<div class="dot two"></div>
-					<div class="face">
-						<div class="eye"></div>
-						<div class="eye right"></div>
-						<div class="mouth happy"></div>
-					</div>
-					<div class="shadow scale"></div>
 					<div class="message">
-						<h1 class="alert">Success!</h1>
-						<p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+						<p>Cảm ơn bạn đã đặt hàng! Chúng tôi sẽ liên hệ sớm để xác nhận.</p>
 					</div>
-					<form method="post">
-						<input name="totalMoney" style="display: none"
-							value="<%=subtotal + tax + 20000%>">
-						<button class="button-box">
-							<h1 class="green">Xác Nhận</h1>
-						</button>
-					</form>
-				</div>
-				<div id="error-box" class="close">
-					<div class="dot"></div>
-					<div class="dot two"></div>
-					<div class="face2">
-						<div class="eye"></div>
-						<div class="eye right"></div>
-						<div class="mouth sad"></div>
-					</div>
-					<div class="shadow move"></div>
-					<div class="message">
-						<h1 class="alert">Not Enough Money!</h1>
-						<p>Vui lòng nạp thêm tiền!
-					</div>
-					<button class="button-box">
-						<a href="Payment"><h1 class="red"
-								style="background-color: #FFFF">Nạp Tiền</h1></a>
+					<button type="button" id="close-success-box" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">✕</button>
+					<button type="button" id="confirm-order" class="button-box">
+						<h1 class="green">Xác Nhận</h1>
 					</button>
-				</div>
+				</div>	
 			</div>
 			<%
-			}
 			} else {
 			%>
 			<footer id="site-footer">
@@ -245,9 +237,45 @@
 	}
 	
 	if(btn_success) {
-		document.querySelector('.btn-success').addEventListener('click', () => {
-			document.getElementById('notify').classList.remove('close');
-			document.getElementById('success-box').classList.remove('close');
+		document.querySelector('.btn-success').addEventListener('click', function(e) {
+			// Prevent the default form submission
+			e.preventDefault();
+			
+			// Validate form if form exists
+			const checkoutForm = document.getElementById('checkoutForm');
+			if (checkoutForm) {
+				const fullName = checkoutForm.elements['fullName'].value;
+				const address = checkoutForm.elements['address'].value;
+				const phoneNumber = checkoutForm.elements['phoneNumber'].value;
+				
+				// If form is valid, show success message and submit the form
+				if (fullName && address && phoneNumber) {
+					document.getElementById('notify').classList.remove('close');
+					document.getElementById('success-box').classList.remove('close');
+				} else {
+					alert('Vui lòng điền đầy đủ thông tin giao hàng');
+				}
+			} else {
+				// If no form (old behavior), just show notification
+				document.getElementById('notify').classList.remove('close');
+				document.getElementById('success-box').classList.remove('close');
+			}
+		});
+		
+		// Add event listener for close button
+		document.getElementById('close-success-box').addEventListener('click', function() {
+			document.getElementById('notify').classList.add('close');
+			document.getElementById('success-box').classList.add('close');
+		});
+		
+		// Add event listener for confirm button
+		document.getElementById('confirm-order').addEventListener('click', function() {
+			const checkoutForm = document.getElementById('checkoutForm');
+			if (checkoutForm) {
+				checkoutForm.submit();
+			}
+			document.getElementById('notify').classList.add('close');
+			document.getElementById('success-box').classList.add('close');
 		});
 	}
 	

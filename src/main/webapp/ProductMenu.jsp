@@ -34,10 +34,10 @@
 				</div>
 				<div class="update--status">
 					<div>
-						<div class="_2OiIy8 _3UxTxH"
+						<!-- <div class="_2OiIy8 _3UxTxH"
 							style="font-size: 12px; margin-top: 8px;">
 							Đã bán
-							<%=product.getNumsold()%></div>
+							<%=product.getNumsold()%></div> -->
 						<div class="price" style="font-size: 16px;">
 							<span class="_2SnSlL"><%=Product.formMoney(product.getSalePrice())%></span><span
 								class="_1KHyQl">₫</span>
