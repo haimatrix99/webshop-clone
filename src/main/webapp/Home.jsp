@@ -128,7 +128,7 @@ ArrayList<Product> productList = new ArrayList<Product>();
 		<div style="background-color: #FFFF;">
 			<div style="padding: 10px; text-align: center; height: 48px;">
 				<h1 style="color: #ee4d2d; font-size: 18px; font-weight: 700;">Sản
-					Phẩm Được Mua Nhiều Nhất</h1>
+					Phẩm Được Xem Nhiều Nhất</h1>
 			</div>
 			<div style="width: 100%; height: 1px; background-color: #ee4d2d;"></div>
 			<div class="Products-hot">
