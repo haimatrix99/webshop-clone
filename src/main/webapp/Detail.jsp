@@ -119,7 +119,7 @@
 							</span>
 						</div>
 					</div>
-					<p>Chất liệu vải rất dễ vệ sinh rất mềm và không có mùi - Kiểu
+					<!-- <p>Chất liệu vải rất dễ vệ sinh rất mềm và không có mùi - Kiểu
 						dáng thời trang mới nhất - Thiết kế cá tính - Đế cao su trong
 						chống trơn trượt - Size từ 35-40 𝐌𝐎̂ 𝐓𝐀̉ 𝐒𝐀̉𝐍 𝐏𝐇𝐀̂̉𝐌
 						𝐂𝐇𝐈 𝐓𝐈𝐄̂́𝐓 - Phần thân trên vải canvas mềm mịn cao cấp đi
@@ -128,7 +128,7 @@
 						của em giày sandal này. Đế cao su đặc có độ bám dính, chống trơn
 						trượt, ma sát tối đa, tạo độ êm ái thoải mái nên sản phẩm hết sức
 						tuyệt vời cho những cô nàng có tính chất công việc phải đi lại cả
-						ngày.</p>
+						ngày.</p> -->
 					<div class="row">
 						<div class="col-md-6">
 							<label for="size">Kích Thước</label> <select id="size"
@@ -187,14 +187,14 @@
 					<div class="name_shop">
 						<h2 style="margin: 10px; padding: 0;"><%=shop.getNameShop() %></h2>
 					</div>
-					<div class="button_shop">
+					<!-- <div class="button_shop">
 						<button style="background-color: #FF9966; color: #ee4d2d;">
 							CHAT NGAY <i class="fa fa-commenting" aria-hidden="true"></i>
 						</button>
 						<button style="background-color: #FFFF; color: #777777;">
 							GHÉ THĂM <i class="fa fa-home" aria-hidden="true"></i>
 						</button>
-					</div>
+					</div> -->
 				</div>
 			</div>
 			<div class="status_shop">
