@@ -211,45 +211,29 @@ List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
 			<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu" style="color: #FFFF; font-size: 18px">
 				Trang chủ
 			</a>
-			<div class="navbar-item has-dropdown is-hoverable is-mega">
+			<div class="navbar-item has-dropdown is-hoverable">
 				<a class="navbar-link" style="color: #FFFF;" href="<%=request.getContextPath()%>/Trangchu/ProductMenu">
 					Sản Phẩm
 				</a>
-				<div id="blogDropdown" class="navbar-dropdown" data-style="width: 18rem;">
-					<div class="container is-fluid">
-						<div class="columns">
-							<div class="column">
-								<%
-								int count = 0;
-								for (Category category : categoryList) {
-									count++;
-								%>
-								<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/ProductMenu?categoryID=<%=category.getCategoryID()%>">
-									<div class="navbar-content">
-										<p><%=category.getNameCategory()%></p>
-									</div>
-								</a>
-								<%
-								if (count == 4) {
-									out.print("</div>\n<div class=\"column\">");
-									count = 0;
-								}
-								}
-								%>
+				<div id="blogDropdown" class="navbar-dropdown">
+					<div class="is-fluid">
+						<%
+						int count = 0;
+						for (Category category : categoryList) {
+							count++;
+						%>
+						<a class="navbar-item" href="<%=request.getContextPath()%>/Trangchu/ProductMenu?categoryID=<%=category.getCategoryID()%>">
+							<div class="navbar-content">
+								<p><%=category.getNameCategory()%></p>
 							</div>
-						</div>
+						</a>
+						<%
+						}
+						%>
 					</div>
 					<hr class="navbar-divider">
 					<div class="navbar-item">
-						<div class="navbar-content">
-							<div class="level is-mobile">
-								<div class="level-left">
-									<div class="level-item">
-										<strong>Stay up to date!</strong>
-									</div>
-								</div>
-							</div>
-						</div>
+						<strong>Stay up to date!</strong>
 					</div>
 				</div>
 			</div>
@@ -263,7 +247,7 @@ List<Cart> sessionCart = (List<Cart>) ses.getAttribute("sessionCart");
 							<div class="level-left">
 								<div class="level-item">
 									<strong>HOTLINE <i class="fa fa-volume-control-phone" aria-hidden="true"></i></strong>
-									<p style="padding-left: 20px; font-size: large;">0111244899</p>
+									<p style="padding-left: 20px; font-size: large;">0799173099</p>
 								</div>
 							</div>
 						</div>

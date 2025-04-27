@@ -59,6 +59,20 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 .close {
 	display: none;
 }
+
+/* Added styles for slider images */
+.mySlides img {
+	width: 100%;
+	height: 700px;
+	object-fit: cover;
+	object-position: center;
+}
+
+.slideshow-container {
+	max-width: 100%;
+	position: relative;
+	margin: auto;
+}
 </style>
 </head>
 <%@ include file="/Pages/MasterPage/Header.jsp"%>
@@ -69,29 +83,43 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 			<div class="slideshow-container">
 
 				<div class="mySlides fade">
-					<img
-						src="https://bizweb.dktcdn.net/100/413/756/collections/bong-ro.jpg?v=1622688671273"
-						style="width: 100%">
+					<img src="/style/assets/images/slider/slider_1.jpg">
 				</div>
 
 				<div class="mySlides fade">
-					<img
-						src="https://bizweb.dktcdn.net/100/413/756/collections/bong-ro.jpg?v=1622688671273"
-						style="width: 100%">
+					<img src="/style/assets/images/slider/slider_2.jpg">
 				</div>
 
 				<div class="mySlides fade">
-					<img
-						src="https://bizweb.dktcdn.net/100/413/756/collections/bong-ro.jpg?v=1622688671273"
-						style="width: 100%">
+					<img src="/style/assets/images/slider/slider_3.jpg">
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/style/assets/images/slider/slider_4.jpg">
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/style/assets/images/slider/slider_5.jpg">
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/style/assets/images/slider/slider_6.jpg">
+				</div>
+
+				<div class="mySlides fade">
+					<img src="/style/assets/images/slider/slider_7.jpg">
 				</div>
 
 				<a class="prev" onclick="plusSlides(-1)">❮</a> <a class="next"
 					onclick="plusSlides(1)">❯</a>
 				<div class="dots">
-					<span class="dot" onclick="currentSlide(1)"></span> <span
-						class="dot" onclick="currentSlide(2)"></span> <span class="dot"
-						onclick="currentSlide(3)"></span>
+					<span class="dot" onclick="currentSlide(1)"></span>
+					<span class="dot" onclick="currentSlide(2)"></span>
+					<span class="dot" onclick="currentSlide(3)"></span>
+					<span class="dot" onclick="currentSlide(4)"></span>
+					<span class="dot" onclick="currentSlide(5)"></span>
+					<span class="dot" onclick="currentSlide(6)"></span>
+					<span class="dot" onclick="currentSlide(7)"></span>
 				</div>
 			</div>
 		</div>
@@ -268,12 +296,16 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 			for (Shop shop : shopList) {
 				productList = ProductBO.getProductsByShop(shop.getId());
 		%>
+		<%
+		int slidesToShow = productList.size() < 5 ? productList.size() : 5;
+		int slidesToScroll = productList.size() <= 3 ? 2 : 3;
+		%>
 		<script type="text/javascript">
 			$(document).on('ready', function () {
 				$(".Shop<%=shop.getId()%>").slick({
 					infinite: true,
-					slidesToShow: <%=productList.size() < 5 ? productList.size() : 5%>,
-					slidesToScroll: <%=productList.size() <= 3 ? 2 : 3%>
+					slidesToShow: <%=slidesToShow%>,
+					slidesToScroll: <%=slidesToScroll%>
 				});
 			});
 		</script>
