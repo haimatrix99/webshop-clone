@@ -222,7 +222,7 @@
 			</ul>
 	
 			<div class="tab-content" id="myTabContent">
-				<div class="tab-pane fade show active" id="description"
+				<!-- <div class="tab-pane fade show active" id="description"
 					role="tabpanel" aria-labelledby="description-tab">Lorem ipsum
 					dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
 					incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -232,7 +232,7 @@
 					Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
 					officia deserunt mollit anim id est laborum. Sed ut perspiciatis
 					unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam.</div>
+					laudantium, totam rem aperiam.</div> -->
 				<div class="tab-pane fade" id="review" role="tabpanel"
 					aria-labelledby="review-tab">
 					<div class="review-heading">Đánh Giá</div>
