@@ -10,9 +10,11 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-ArrayList<Product> productList = new ArrayList<Product>();
+ArrayList<Product> hotProductList = ProductBO.getProductFromData(); // Load all products as hot
 ArrayList<Shop> shopList = new ArrayList<Shop>();
 shopList = (ArrayList<Shop>) request.getAttribute("shopList");
+// For categories and shop products
+ArrayList<Product> productList = new ArrayList<Product>();
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,76 +132,19 @@ shopList = (ArrayList<Shop>) request.getAttribute("shopList");
 			</div>
 			<div style="width: 100%; height: 1px; background-color: #ee4d2d;"></div>
 			<div class="Products-hot">
+				<% if (hotProductList != null && !hotProductList.isEmpty()) {
+					for (Product product : hotProductList) { %>
 				<div class="Product-hot">
-					<a href="">
+					<a href="<%=request.getContextPath()%>/Trangchu/Product?id=<%=product.getId()%>">
 						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xaz0k14.webp"
-								alt="">
+							<span class="span-hot"></span>
+							<span class="spans"></span>
+							<img src="<%=product.getUrl()%>" alt="<%=product.getFewChar()%>">
 						</div>
-						<div>Quần áo thể thao...</div>
+						<div><%=product.getFewChar()%></div>
 					</a>
 				</div>
-				<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xw1j8c0.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao...</div>
-					</a>
-				</div>
-				<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/cn-11134207-7ras8-m2afxjhum7i6d4.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao...</div>
-					</a>
-				</div>
-				<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xxg3o93.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao...</div>
-					</a>
-				</div>
-				<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xp0p0c6.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao...</div>
-					</a>
-				</div>
-				<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lszjdl9j9g2h14.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao</div>
-					</a>
-				</div>
-					<div class="Product-hot">
-					<a href="">
-						<div>
-							<span class="span-hot"></span> <span class="spans"></span> <img
-								src="https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lsl81q4xxg3o93.webp"
-								alt="">
-						</div>
-						<div>Quần áo thể thao...</div>
-					</a>
-				</div>
+				<% } } %>
 			</div>
 		</div>
 		<!-- Add Products By Category Section -->
