@@ -162,7 +162,7 @@ ArrayList<Product> productList = new ArrayList<Product>();
 			<div class="category-products" style="display: flex; flex-wrap: wrap; justify-content: center; padding: 15px;">
 				<%
 				for (Product product : categoryProducts) {
-					if (categoryProducts.size() > 6 && categoryProducts.indexOf(product) >= 6) break; // Limit to 6 products per category
+					if (categoryProducts.size() > 10 && categoryProducts.indexOf(product) >= 10) break; // Limit to 6 products per category
 				%>
 				<a class="Product" style="width: 16%; min-width: 180px; margin: 10px;"
 					href="<%=request.getContextPath()%>/Trangchu/Product?id=<%=product.getId()%>">
